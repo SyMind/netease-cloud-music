@@ -44,11 +44,13 @@ export type PlayListDetailInfoType = {
   tracks: Array<MusicItemType>
 }
 
+export type PlayListDetailPrivilege = {
+  st: number
+}
+
 export type SongType = {
   playListDetailInfo: PlayListDetailInfoType,
-  playListDetailPrivileges: Array<{
-    st: number
-  }>,
+  playListDetailPrivileges: PlayListDetailPrivilege[],
   // 可播放歌曲列表
   canPlayList: Array<MusicItemType>,
   // 是否正在播放

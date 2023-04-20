@@ -1,5 +1,5 @@
 import { writable } from 'svelte/store'
-import { PlayListDetailInfoType } from '../constants/commonType'
+import { PlayListDetailInfoType, PlayListDetailPrivilege } from '../constants/commonType'
 import api from '../services/api'
 
 export const playListDetailInfo = writable<PlayListDetailInfoType>({
@@ -13,6 +13,8 @@ export const playListDetailInfo = writable<PlayListDetailInfoType>({
   },
   tracks: [],
 })
+
+export const playListDetailPrivileges = writable<PlayListDetailPrivilege[]>([])
 
 export function getPlayListDetail({ id }: { id: string }) {
   api.get('/playlist/detail', { id }).then(({ data }) => {
@@ -30,5 +32,6 @@ export function getPlayListDetail({ id }: { id: string }) {
       }))
     }
     playListDetailInfo.set(result)
+    playListDetailPrivileges.set(data.privileges)
   })
 }

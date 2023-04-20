@@ -4,10 +4,16 @@
   import Taro from '@tarojs/taro'
   import { formatCount } from '../../../../utils/common'
   import * as song from '../../../../stores/song'
+  import Loading from '../../../../components/Loading.svelte'
 
   let playListDetailInfo = get(song.playListDetailInfo)
-  const unsubscribe = song.playListDetailInfo.subscribe(value => {
+  const unsubscribePlayListDetailInfo = song.playListDetailInfo.subscribe(value => {
     playListDetailInfo = value
+  })
+
+  let playListDetailPrivileges = get(song.playListDetailPrivileges)
+  const unsubscribePlayListDetailPrivileges = song.playListDetailPrivileges.subscribe(value => {
+    playListDetailPrivileges = value
   })
 
   onMount(() => {
@@ -19,8 +25,22 @@
   })
 
   onDestroy(() => {
-    unsubscribe()
+    unsubscribePlayListDetailInfo()
+    unsubscribePlayListDetailPrivileges()
   })
+
+  function playSong(songId, playStatus) {
+    if (playStatus === 0) {
+      Taro.navigateTo({
+        url: `/pages/packageA/pages/songDetail/index?id=${songId}`
+      });
+    } else {
+      Taro.showToast({
+        title: "暂无版权",
+        icon: "none"
+      });
+    }
+  }
 </script>
 
 <t-view>
@@ -53,6 +73,55 @@
       </t-view>
     </t-view>
   </t-view>
+
+  <t-view class="playList__header--more">
+    <t-view class="playList__header--more__tag">
+      标签：
+      {#each playListDetailInfo.tags as tag (tag)}
+        <t-text class="playList__header--more__tag__item">
+          {tag}
+        </t-text>
+      {/each}
+      {playListDetailInfo.tags.length === 0 ? "暂无" : ""}
+    </t-view>
+    <t-view class="playList__header--more__desc">
+      简介：{playListDetailInfo.description || "暂无"}
+    </t-view>
+  </t-view>
+
+  <t-view class="playList__content">
+    <t-view class="playList__content__title">歌曲列表</t-view>
+    {#if playListDetailInfo.tracks.length === 0}
+      <Loading />
+    {/if}
+    <t-view class="playList__content__list">
+      {#each playListDetailInfo.tracks as track, index (track.id)}
+        <t-view
+          class="playList__content__list__item"
+          class:playList__content__list__item__disabled="{playListDetailPrivileges[index].st === -200}"
+          on:tap={playSong(
+            track.id,
+            playListDetailPrivileges[index].st
+          )}
+        >
+          <t-text class="playList__content__list__item__index">
+            {index + 1}
+          </t-text>
+          <t-view class="playList__content__list__item__info">
+            <t-view>
+              <t-view class="playList__content__list__item__info__name">
+                {track.name}
+              </t-view>
+              <t-view class="playList__content__list__item__info__desc">
+                {track.ar[0] ? track.ar[0].name : ""} - {track.al.name}
+              </t-view>
+            </t-view>
+            <t-text class="at-icon at-icon-chevron-right" />
+          </t-view>
+        </t-view>
+      {/each}
+    </t-view >
+  </t-view >
 </t-view>
 
 <style lang="scss">
@@ -144,6 +213,70 @@
         height: 60px;
         border-radius: 50%;
         margin-right: 10px;
+      }
+    }
+  }
+
+  &--more {
+    padding: 30px;
+    font-size: 28px;
+    color: #666;
+    &__tag {
+      &__item {
+        font-size: 24px;
+        margin-right: 20px;
+        padding: 4px 16px;
+        border: 1px solid rgba(0,0,0,.1);
+        border-radius: 20px;
+      }
+    }
+    &__desc {
+      margin-top: 28px;
+    }
+  }
+}
+
+.playList__content {
+  &__title {
+    color: #666;
+    font-size: 24px;
+    background-color: #eeeff0;
+    padding: 20px;
+  }
+  &__list {
+    &__item {
+      display: flex;
+      align-items: center;
+      &__disabled {
+        color: #ccc;
+      }
+      &__index {
+        font-size: 34px;
+        color: #999999;
+        width: 80px;
+        text-align: center;
+      }
+      &__info {
+        display: flex;
+        justify-content: space-between;
+        padding: 20px 0;
+        flex: 1;
+        align-items: center;
+        border-bottom: 1px solid rgba(0,0,0,.1);
+        &__name {
+          font-size: 34px;
+        }
+        &__desc {
+          font-size: 24px;
+          color: #888888;
+          margin-top: 10px;
+        }
+        .at-icon {
+          font-size: 30px;
+          margin: 0 10px;
+          padding: 15px;
+          color: #888888;
+        }
       }
     }
   }
