@@ -10,7 +10,7 @@
 
 <t-view
 class="loading"
-class:fullPage="{fullPage}"
+class:full-page="{fullPage}"
 class:hide="{hide}"
 ></t-view>
 
@@ -26,14 +26,14 @@ class:hide="{hide}"
   justify-content: center;
   padding: 40px 0;
   box-sizing: border-box;
-  &.fullPage {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
-  &.hide {
-    display: none;
-  }
+}
+.full-page {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.hide {
+  display: none;
 }
 </style>
