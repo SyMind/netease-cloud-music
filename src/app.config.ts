@@ -3,9 +3,10 @@ export default defineAppConfig({
     'pages/index/index'
   ],
   window: {
-    backgroundTextStyle: 'light',
-    navigationBarBackgroundColor: '#fff',
-    navigationBarTitleText: 'WeChat',
-    navigationBarTextStyle: 'black'
-  }
+    backgroundTextStyle: "light",
+    navigationBarBackgroundColor: "#d43c33",
+    navigationBarTitleText: "网易云音乐",
+    navigationBarTextStyle: "white",
+  },
+  requiredBackgroundModes: ["audio"]
 })
