@@ -21,7 +21,7 @@ export const formatTime = date => {
 }
 
 // 转换歌词字符串为数组
-export const parse_lrc = (lrc_content: string) => {
+export const parseLrc = (lrc_content: string) => {
   let now_lrc: Array<{
     lrc_text: string,
     lrc_sec?: number

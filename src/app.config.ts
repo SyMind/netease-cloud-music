@@ -14,6 +14,7 @@ export default defineAppConfig({
       root: 'pages/packageA',
       pages: [
         'pages/playListDetail/index',
+        'pages/songDetail/index',
       ]
     }
   ]

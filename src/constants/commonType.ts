@@ -15,7 +15,7 @@ export type MusicItemType = {
   current?: boolean
 }
 
-export type currentSongInfoType = {
+export type CurrentSongInfoType = {
   id: number,
   name: string,
   ar: Array<{
@@ -48,6 +48,8 @@ export type PlayListDetailPrivilege = {
   st: number
 }
 
+export type PlayModeType = 'loop' | 'one' | 'shuffle'
+
 export type SongType = {
   playListDetailInfo: PlayListDetailInfoType,
   playListDetailPrivileges: PlayListDetailPrivilege[],
@@ -70,7 +72,7 @@ export type SongType = {
   // 当前播放的歌曲id
   currentSongId: string,
   // 当前播放的歌曲详情
-  currentSongInfo: currentSongInfoType,
+  currentSongInfo: CurrentSongInfoType,
   // 当前播放的歌曲在播放列表中的索引,默认第一首
   currentSongIndex: number,
   // 播放模式
