@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onMount } from 'svelte'
-  import Taro from '@tarojs/taro';
+  import Taro from '@tarojs/taro'
   import Loading from '../../components/Loading.svelte'
   import SearchBar from '../../components/SearchBar.svelte'
   import api from '../../services/api'
@@ -43,10 +43,16 @@
 
   $: showLoading = !recommendPlayList.length && !recommendDj.length
 
-  function wip() {
+  function workInProgress() {
     Taro.showToast({
       title: "正在开发中，敬请期待",
       icon: "none"
+    });
+  }
+
+  function goDetail(item) {
+    Taro.navigateTo({
+      url: `/pages/packageA/pages/playListDetail/index?id=${item.id}&name=${item.name}`
     });
   }
 </script>
@@ -74,7 +80,7 @@
   <t-view class="handle_list">
     <t-view
       class="handle_list__item"
-      on:tap={wip}
+      on:tap={workInProgress}
     >
       <t-view class="handle_list__item__icon-wrap">
       </t-view>
@@ -82,7 +88,7 @@
     </t-view>
     <t-view
       class="handle_list__item"
-      on:tap={wip}
+      on:tap={workInProgress}
     >
       <t-view class="handle_list__item__icon-wrap">
       </t-view>
@@ -96,7 +102,7 @@
       {#each recommendPlayList as item (item.id)}
         <t-view
           class="recommend_playlist__item"
-          on:tap={this.goDetail.bind(this, item)}
+          on:tap={() => goDetail(item)}
         >
           <t-image
             src={`${item.picUrl}?imageView&thumbnail=250x0`}

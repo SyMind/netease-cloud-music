@@ -9,9 +9,9 @@
 </script>
 
 <t-view
-class="loading"
-class:full-page="{fullPage}"
-class:hide="{hide}"
+  class="loading"
+  class:full-page="{fullPage}"
+  class:hide="{hide}"
 />
 
 <style lang="scss">
