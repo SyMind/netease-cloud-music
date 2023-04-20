@@ -9534,6 +9534,11 @@ svelte-loader@^3.1.5:
     svelte-dev-helper "^1.1.9"
     svelte-hmr "^0.14.2"
 
+svelte@^3.58.0:
+  version "3.58.0"
+  resolved "https://registry.npmjs.org/svelte/-/svelte-3.58.0.tgz#d3e6f103efd6129e51c7d709225ad3b4c052b64e"
+  integrity sha512-brIBNNB76mXFmU/Kerm4wFnkskBbluBDCjx/8TcpYRb298Yh2dztS2kQ6bhtjMcvUhd5ynClfwpz5h2gnzdQ1A==
+
 svg-tags@^1.0.0:
   version "1.0.0"
   resolved "https://registry.npmjs.org/svg-tags/-/svg-tags-1.0.0.tgz#58f71cee3bd519b59d4b2a843b6c7de64ac04764"
@@ -9610,10 +9615,10 @@ taro-css-to-react-native@3.6.5:
     css-mediaquery "^0.1.2"
     postcss-value-parser "^3.3.0"
 
-tarojs-plugin-svelte@^1.0.3:
-  version "1.0.3"
-  resolved "https://registry.npmjs.org/tarojs-plugin-svelte/-/tarojs-plugin-svelte-1.0.3.tgz#dd5d723c97d0407d8d347d3a4481263ea37834c5"
-  integrity sha512-MCmgBcvDTKbfbEOknf9A8JYvmninYfYz667+U+ogZHQ0AAMEnvkyuZNhhIgvoVsWpczruWNWD0ZYC1DdkYI8BA==
+tarojs-plugin-svelte@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.npmjs.org/tarojs-plugin-svelte/-/tarojs-plugin-svelte-1.0.4.tgz#cb9b6fb7578f6f432132d5ccd75665a05bc1b519"
+  integrity sha512-3uofUklSSgkjNibgjdfXq4XJNWoOP+ISROQ2Q5EV8L38j0wEi+LX2csM1XunbpDNLyXoUlwpy4jpPrtgzyb5mw==
   dependencies:
     code-red "^0.2.5"
     estree-walker "^3.0.2"
