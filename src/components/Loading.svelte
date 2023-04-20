@@ -1,18 +1,18 @@
 <script lang="ts">
   type $$Props = {
-    fullPage?: boolean;
-    hide?: boolean;
-  };
+    fullPage?: boolean
+    hide?: boolean
+  }
 
-  export let fullPage = false;
-  export let hide = false;
+  export let fullPage = false
+  export let hide = false
 </script>
 
 <t-view
 class="loading"
 class:full-page="{fullPage}"
 class:hide="{hide}"
-></t-view>
+/>
 
 <style lang="scss">
 .loading {
