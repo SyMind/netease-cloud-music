@@ -15,6 +15,8 @@
     }[];
   }
 
+  const backgroundAudioManager = Taro.getBackgroundAudioManager()
+
   let currentSongInfo = get(song.currentSongInfo)
   const unsubscribeCurrentSongInfo = song.currentSongInfo.subscribe(value => {
     currentSongInfo = value
@@ -24,6 +26,16 @@
   let playMode = get(song.playMode)
   const unsubscribePlayMode = song.playMode.subscribe(value => {
     playMode = value
+  })
+
+  let currentSongIndex = get(song.currentSongIndex)
+  const unsubscribeCurrentSongIndex = song.currentSongIndex.subscribe(value => {
+    currentSongIndex = value
+  })
+
+  let canPlayList = get(song.canPlayList)
+  const unsubscribeCanPlayList = song.canPlayList.subscribe(value => {
+    canPlayList = value
   })
 
   let isPlaying = false
@@ -63,17 +75,26 @@
 
   // 循环播放当前歌曲
   function getCurrentSong() {
-
+    setSongInfo(currentSongInfo)
   }
 
   // 随机播放歌曲
   function getShuffleSong() {
-
+    let nextSongIndex = Math.floor(Math.random() * (canPlayList.length - 1))
+    song.getSongInfo(canPlayList[nextSongIndex].id)
   }
 
   // 获取下一首
   function getNextSong() {
-
+    let nextSongIndex = currentSongIndex + 1
+    if (playMode === "shuffle") {
+      getShuffleSong()
+      return;
+    }
+    if (currentSongIndex === canPlayList.length - 1) {
+      nextSongIndex = 0
+    }
+    song.getSongInfo(canPlayList[nextSongIndex].id)
   }
 
   function changePlayMode() {
@@ -104,7 +125,15 @@
 
   // 获取上一首
   function getPrevSong() {
-
+    let prevSongIndex = currentSongIndex - 1
+    if (playMode === "shuffle") {
+      getShuffleSong()
+      return;
+    }
+    if (currentSongIndex === 0) {
+      prevSongIndex = canPlayList.length - 1
+    }
+    song.getSongInfo(canPlayList[prevSongIndex].id)
   }
 
   function pauseMusic() {
@@ -140,11 +169,9 @@
     lyricVisible = true
   }
 
-  const backgroundAudioManager = Taro.getBackgroundAudioManager()
-
   function percentChange(e) {
     const { value } = e.detail
-    const { dt } = this.props.song.currentSongInfo
+    const { dt } = currentSongInfo
     let currentPosition = Math.floor(((dt / 1000) * value) / 100)
     backgroundAudioManager.seek(currentPosition)
     backgroundAudioManager.play()
@@ -155,6 +182,9 @@
   }
 
   function setSongInfo(songInfo) {
+    if (!songInfo.url) {
+      return
+    }
     try {
       const { name, al, url, lrcInfo } = songInfo
       Taro.setNavigationBarTitle({
@@ -193,7 +223,6 @@
       isPlaying = true
     })
     backgroundAudioManager.onEnded(() => {
-      const { playMode } = this.props.song
       const routes = Taro.getCurrentPages()
       const currentRoute = routes[routes.length - 1].route
       // 如果在当前页面则直接调用下一首的逻辑，反之则触发nextSong事件
@@ -208,6 +237,8 @@
   onDestroy(() => {
     unsubscribeCurrentSongInfo()
     unsubscribePlayMode()
+    unsubscribeCurrentSongIndex()
+    unsubscribeCanPlayList()
   })
 </script>
 

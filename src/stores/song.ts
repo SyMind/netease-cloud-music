@@ -1,9 +1,10 @@
-import { writable } from 'svelte/store'
+import { writable, derived, get } from 'svelte/store'
 import {
   PlayListDetailInfoType,
   PlayListDetailPrivilege,
   CurrentSongInfoType,
-  PlayModeType
+  PlayModeType,
+  MusicItemType
 } from '../constants/commonType'
 import api from '../services/api'
 import { parseLrc } from '../utils/common'
@@ -56,7 +57,9 @@ export const currentSongInfo = writable<CurrentSongInfoType>({
   st: 0 // 是否喜欢
 })
 
-export async function getSongInfo(id: string) {
+export const currentSongIndex = writable<number>(0)
+
+export async function getSongInfo(id: string | number) {
   const songDetail = await api.get('/song/detail', { ids: id })
   const songInfo = songDetail.data.songs[0]
 
@@ -69,6 +72,17 @@ export async function getSongInfo(id: string) {
   res.data.scroll = lrc.scroll ? 1 : 0
   songInfo.lrcInfo = res.data
 
+  const $canPlayList = get(canPlayList)
+  let nextSongIndex = $canPlayList.findIndex(item => item.id === songInfo.id)
+  // let nextCanPlayList = $canPlayList.map((item, index) => {
+  //   item.current = false
+  //   if (nextSongIndex === index) {
+  //     item.current = true
+  //   }
+  //   return item
+  // })
+
+  currentSongIndex.set(nextSongIndex)
   currentSongInfo.set(songInfo)
 }
 
@@ -77,3 +91,11 @@ export const playMode = writable<PlayModeType>('loop')
 export function changePlayMode(value: PlayModeType) {
   playMode.set(value)
 }
+
+export const canPlayList = derived<typeof playListDetailInfo, MusicItemType[]>(playListDetailInfo, ($playListDetailInfo, set) => {
+  const value: MusicItemType[] = $playListDetailInfo.tracks.filter((_, index) => {
+    const $playListDetailPrivileges = get(playListDetailPrivileges)
+    return $playListDetailPrivileges[index].st !== -200
+  })
+	set(value)
+});
