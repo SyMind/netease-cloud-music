@@ -5,6 +5,15 @@
   import * as song from '../../../../stores/song'
   import Slider from '../../../../components/Slider.svelte'
 
+  import AAJ from '../../../../assets/images/aag.png'
+  import AJH from '../../../../assets/images/ajh.png'
+  import AJD from '../../../../assets/images/ajd.png'
+  import AJF from '../../../../assets/images/ajf.png'
+  import AJB from '../../../../assets/images/ajb.png'
+
+  import PlayIcnLoved from '../../../../assets/images/song/play_icn_loved.png'
+  import PlayIcnLove from '../../../../assets/images/song/play_icn_love.png'
+
   type LrcType = {
     scroll: boolean;
     nolyric: boolean;
@@ -254,7 +263,7 @@
     >
       <t-image
         class="song__music__main--before"
-        src={require("../../../../assets/images/aag.png")}
+        src={AAJ}
       />
       <t-view class="song__music__main__cover">
         <t-view
@@ -297,34 +306,30 @@
         on:tap={changePlayMode}
       />
       <t-image
-        src={require("../../../../assets/images/ajh.png")}
+        src={AJH}
         class="song__operation__prev"
         on:tap={getPrevSong}
       />
       {#if isPlaying}
         <t-image
-          src={require("../../../../assets/images/ajd.png")}
+          src={AJD}
           class="song__operation__play"
           on:tap={pauseMusic}
         />
       {:else}
         <t-image
-          src={require("../../../../assets/images/ajf.png")}
+          src={AJF}
           class="song__operation__play"
           on:tap={playMusic}
         />
       {/if}
       <t-image
-        src={require("../../../../assets/images/ajb.png")}
+        src={AJB}
         class="song__operation__next"
         on:tap={getNextSong}
       />
       <t-image
-        src={
-          star
-            ? require("../../../../assets/images/song/play_icn_loved.png")
-            : require("../../../../assets/images/song/play_icn_love.png")
-        }
+        src={star ? PlayIcnLoved : PlayIcnLove}
         class="song__operation__like"
         on:tap={likeMusic}
       />
