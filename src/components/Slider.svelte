@@ -8,14 +8,6 @@
   }
 
   export let percent: number = 0
-
-  function handleChange(e) {
-    dispatch('change', e)
-  }
-
-  function handleChanging(e) {
-    dispatch('changing', e)
-  }
 </script>
 
 <t-view class="slider">
@@ -23,8 +15,8 @@
     value={percent}
     block-size={15}
     active-color="#d43c33"
-    on:change={handleChange}
-    on:changing={handleChanging}
+    on:change={e => dispatch('change', e)}
+    on:changing={e => dispatch('changing', e)}
   />
 </t-view>
 

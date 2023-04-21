@@ -4,6 +4,7 @@
   import Taro from '@tarojs/taro'
   import * as song from '../../../../stores/song'
   import Slider from '../../../../components/Slider.svelte'
+  import Lyric from '../../../../components/Lyric.svelte'
 
   import AAJ from '../../../../assets/images/aag.png'
   import AJH from '../../../../assets/images/ajh.png'
@@ -178,6 +179,10 @@
     lyricVisible = true
   }
 
+  function hiddenLyric() {
+    lyricVisible = false
+  }
+
   function percentChange(e) {
     const { value } = e.detail
     const { dt } = currentSongInfo
@@ -255,11 +260,11 @@
   <t-image class="song__bg" src={currentSongInfo.al.picUrl} />
   <t-view
     class="song__music"
-    class:song__music--hidden="{showLyric}"
+    class:song__music--hidden={lyricVisible}
   >
     <t-view
       class="song__music__main"
-      class:song__music__main--playing="{isPlaying}"
+      class:song__music__main--playing={isPlaying}
     >
       <t-image
         class="song__music__main--before"
@@ -268,7 +273,7 @@
       <t-view class="song__music__main__cover">
         <t-view
           class="song__music__main__img circling"
-          class:z-pause="{!isPlaying}"
+          class:z-pause={!isPlaying}
         >
           <t-image
             class="song__music__main__img__cover"
@@ -283,21 +288,24 @@
     >
       <t-view
         class="song__music__lgour__cover circling"
-        class:z-pause="{!isPlaying}"
+        class:z-pause={!isPlaying}
       />
     </t-view>
   </t-view>
+
   <Slider
     percent={playPercent}
     on:change={percentChange}
     on:changing={percentChanging}
   />
-  <!-- <Lyric
+
+  <Lyric
     lrc={lrc}
     lrcIndex={lrcIndex}
-    showLyric={showLyric}
-    onTrigger={() => this.hiddenLyric()}
-  /> -->
+    showLyric={lyricVisible}
+    on:tap={hiddenLyric}
+  />
+
   <t-view class="song__bottom">
     <t-view class="song__operation">
       <t-image
@@ -369,7 +377,7 @@
   width: 592px;
   height: 592px;
   margin: 140px auto 0;
-  &.hidden {
+  &--hidden {
     display: none;
   }
   &__main {
@@ -414,18 +422,6 @@
       transform: translate(-50%, -50%);
       z-index: 1;
       overflow: hidden;
-      &__img {
-        width: 100%;
-        height: 100%;
-        border-radius: 50%;
-        overflow: hidden;
-        background: url(//s3.music.126.net/m/s/img/disc_default.png?7c9b3ad…) no-repeat;
-        background-size: contain;
-        &__cover {
-          width: 100%;
-          height: 100%;
-        }
-      }
     }
   }
   &__lgour {

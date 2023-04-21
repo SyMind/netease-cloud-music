@@ -98,7 +98,7 @@
       {#each playListDetailInfo.tracks as track, index (track.id)}
         <t-view
           class="playList__content__list__item"
-          class:playList__content__list__item--disabled="{playListDetailPrivileges[index].st === -200}"
+          class:playList__content__list__item--disabled={playListDetailPrivileges[index].st === -200}
           on:tap={playSong(
             track.id,
             playListDetailPrivileges[index].st
