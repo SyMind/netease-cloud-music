@@ -83,6 +83,7 @@
       on:tap={workInProgress}
     >
       <t-view class="handle_list__item__icon-wrap">
+        <t-text class="fa fa-calendar-minus-o handle_list__item__icon" />
       </t-view>
       <t-text class="handle_list__item__text">每日推荐</t-text>
     </t-view>
@@ -91,6 +92,7 @@
       on:tap={workInProgress}
     >
       <t-view class="handle_list__item__icon-wrap">
+        <t-text class="fa fa-bar-chart handle_list__item__icon" />
       </t-view>
       <t-text class="handle_list__item__text">排行榜</t-text>
     </t-view>
@@ -109,7 +111,7 @@
             class="recommend_playlist__item__cover"
           />
           <t-view class="recommend_playlist__item__cover__num">
-            <t-text class="at-icon at-icon-sound" />
+            <t-text class="icon icon-sound" />
             {item.playCount < 10000
               ? item.playCount
               : `${Number(item.playCount / 10000).toFixed(0)}万`}
@@ -161,9 +163,11 @@
       border-radius: 50%;
       margin: 0 auto;
     }
-    // &__icon {
-    //   margin-left: 5px;
-    // }
+    &__icon {
+      font-size: 50px;
+      margin-left: 5px;
+      color: #fff;
+    }
     &__text {
       font-size: 24px;
     }
@@ -193,7 +197,7 @@
       display: flex;
       align-items: center;
       color: #fff;
-      .at-icon-sound {
+      .icon-sound {
         margin-right: 10px;
       }
     }
