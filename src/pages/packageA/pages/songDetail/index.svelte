@@ -3,6 +3,7 @@
   import { onMount, onDestroy } from 'svelte'
   import Taro from '@tarojs/taro'
   import * as song from '../../../../stores/song'
+  import Slider from '../../../../components/Slider.svelte'
 
   type LrcType = {
     scroll: boolean;
@@ -17,6 +18,7 @@
   let currentSongInfo = get(song.currentSongInfo)
   const unsubscribeCurrentSongInfo = song.currentSongInfo.subscribe(value => {
     currentSongInfo = value
+    setSongInfo(value)
   })
 
   let playMode = get(song.playMode)
@@ -106,11 +108,13 @@
   }
 
   function pauseMusic() {
-
+    backgroundAudioManager.pause()
+    isPlaying = false
   }
 
   function playMusic() {
-
+    backgroundAudioManager.play()
+    isPlaying = true
   }
 
   function likeMusic() {
@@ -136,11 +140,42 @@
     lyricVisible = true
   }
 
+  const backgroundAudioManager = Taro.getBackgroundAudioManager()
+
+  function percentChange(e) {
+    const { value } = e.detail
+    const { dt } = this.props.song.currentSongInfo
+    let currentPosition = Math.floor(((dt / 1000) * value) / 100)
+    backgroundAudioManager.seek(currentPosition)
+    backgroundAudioManager.play()
+  }
+
+  function percentChanging() {
+    backgroundAudioManager.pause()
+  }
+
+  function setSongInfo(songInfo) {
+    try {
+      const { name, al, url, lrcInfo } = songInfo
+      Taro.setNavigationBarTitle({
+        title: name
+      })
+      backgroundAudioManager.title = name
+      backgroundAudioManager.coverImgUrl = al.picUrl
+      backgroundAudioManager.src = url
+
+      lrc = lrcInfo
+      isPlaying = true
+    } catch (err) {
+      console.error("err", err)
+      getNextSong()
+    }
+  }
+
   onMount(() => {
     const { id = '' } = Taro.getCurrentInstance().router?.params || {}
     song.getSongInfo(id)
 
-    const backgroundAudioManager = Taro.getBackgroundAudioManager()
     backgroundAudioManager.onTimeUpdate(() => {
       Taro.getBackgroundAudioPlayerState({
         success(res) {
@@ -204,7 +239,7 @@
     </t-view>
     <t-view
       class="song__music__lgour"
-      onClick={showLyric}
+      on:tap={showLyric}
     >
       <t-view
         class="song__music__lgour__cover circling"
@@ -212,12 +247,12 @@
       />
     </t-view>
   </t-view>
-  <!-- <Slider
+  <Slider
     percent={playPercent}
-    onChange={this.percentChange.bind(this)}
-    onChanging={this.percentChanging.bind(this)}
+    on:change={percentChange}
+    on:changing={percentChanging}
   />
-  <Lyric
+  <!-- <Lyric
     lrc={lrc}
     lrcIndex={lrcIndex}
     showLyric={showLyric}
@@ -228,30 +263,30 @@
       <t-image
         src={playModeImg}
         class="song__operation__mode"
-        onClick={changePlayMode}
+        on:tap={changePlayMode}
       />
       <t-image
         src={require("../../../../assets/images/ajh.png")}
         class="song__operation__prev"
-        onClick={getPrevSong}
+        on:tap={getPrevSong}
       />
       {#if isPlaying}
         <t-image
           src={require("../../../../assets/images/ajd.png")}
           class="song__operation__play"
-          onClick={pauseMusic}
+          on:tap={pauseMusic}
         />
       {:else}
         <t-image
           src={require("../../../../assets/images/ajf.png")}
           class="song__operation__play"
-          onClick={playMusic}
+          on:tap={playMusic}
         />
       {/if}
       <t-image
         src={require("../../../../assets/images/ajb.png")}
         class="song__operation__next"
-        onClick={getNextSong}
+        on:tap={getNextSong}
       />
       <t-image
         src={
@@ -260,7 +295,7 @@
             : require("../../../../assets/images/song/play_icn_love.png")
         }
         class="song__operation__like"
-        onClick={likeMusic}
+        on:tap={likeMusic}
       />
     </t-view>
   </t-view>
