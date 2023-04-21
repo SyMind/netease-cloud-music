@@ -2,7 +2,7 @@
 
 全网第一个使用 Svelte 开发的小程序 🔥
 
-> 功能设计参考自 [taro-music](https://github.com/lsqy/taro-music/tree/master)，飞速开发中 👨‍💻
+> 基于 [Tarojs Plugin Svelte](https://github.com/SyMind/tarojs-plugin-svelte) 开发，功能设计完全参考自 [taro-music](https://github.com/lsqy/taro-music/tree/master)，飞速开发中 👨‍💻
 
 # 快速开始
 
