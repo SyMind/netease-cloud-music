@@ -1,12 +1,18 @@
-<t-view class="container">
+<script>
+  import { createEventDispatcher } from 'svelte'
+
+  const dispatch = createEventDispatcher();
+</script>
+
+<t-view class="seach-bar" on:tap={() => dispatch('tap')}>
   <t-view class="input">
-    <t-icon type="search" size="14" color="#999" />
+    <t-icon class="icon" type="search" size={14} color="#999" />
     <t-view class="text">搜索</t-view>
   </t-view>
 </t-view>
 
 <style lang="scss">
-.container {
+.seach-bar {
   position: relative;
   padding: 12px 18px;
   &::after {

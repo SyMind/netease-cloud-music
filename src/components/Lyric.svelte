@@ -43,9 +43,8 @@
     {#if lrc.uncollected && !lrc.nolyric}
       <t-view class="song__lyric__notext">暂无歌词</t-view>
     {/if}
-    {#each lrc.lrclist as item, index}
+    {#each lrc.lrclist as item, index (item.lrc_sec)}
       <t-view
-        key={item.lrc_sec}
         class="song__lyric__text"
         class:song__lyric__text--current={index === lrcIndex && !lrc.scroll}
         class:song__lyric__text_siblings2={

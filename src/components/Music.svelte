@@ -48,7 +48,9 @@
   }
 
   function playSong(id: number) {
-
+    Taro.navigateTo({
+      url: `/pages/packageA/pages/songDetail/index?id=${id}`
+    })
   }
 </script>
 
@@ -85,16 +87,13 @@
       on:close={() => isOpened = false}
     >
       <t-view class="music__playlist">
-        {#each canPlayList as item}
+        {#each canPlayList as item (item.id)}
           <t-view
-            key={item.id}
             class="music__playlist__item"
             class:current={item.current}
+            on:tap={() => playSong(item.id)}
           >
-            <t-view
-              class="music__playlist__item__info"
-              on:tap={() => playSong(item.id)}
-            >
+            <t-view class="music__playlist__item__info">
               {`${item.name} - ${item.ar[0] ? item.ar[0].name : ""}`}
             </t-view>
             <t-view class="music__playlist__item__close">

@@ -61,12 +61,6 @@
       icon: "none"
     });
   }
-
-  function goDetail(item) {
-    Taro.navigateTo({
-      url: `/pages/packageA/pages/playListDetail/index?id=${item.id}&name=${item.name}`
-    });
-  }
 </script>
 
 <t-view class:has_music_box={currentSongInfo.name}>
@@ -74,7 +68,13 @@
 
   <Music />
 
-  <SearchBar />
+  <SearchBar
+    on:tap={() => {
+      Taro.navigateTo({
+        url: `/pages/packageA/pages/search/index`
+      });
+    }}
+  />
 
   <t-swiper
     circular={true}
@@ -118,7 +118,11 @@
       {#each recommendPlayList as item (item.id)}
         <t-view
           class="recommend_playlist__item"
-          on:tap={() => goDetail(item)}
+          on:tap={() => {
+            Taro.navigateTo({
+              url: `/pages/packageA/pages/playListDetail/index?id=${item.id}&name=${item.name}`
+            })
+          }}
         >
           <t-image
             src={`${item.picUrl}?imageView&thumbnail=250x0`}
