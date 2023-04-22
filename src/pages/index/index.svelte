@@ -132,11 +132,11 @@
 //   padding-bottom: 220px;
 // }
 .banner_list {
-  height: 375px;
+  height: 268px;
   margin-top: 20px;
   &__item__img {
     width: 92%;
-    height: 375px;
+    height: 268px;
     position: relative;
     left: 4%;
     border-radius: 20px;

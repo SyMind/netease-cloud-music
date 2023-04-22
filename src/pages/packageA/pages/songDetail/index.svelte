@@ -25,6 +25,18 @@
     }[];
   }
 
+  let isPlaying = false
+  let lrc: LrcType = {
+    scroll: false,
+    nolyric: false,
+    uncollected: false,
+    lrclist: []
+  }
+  let lrcIndex = 0
+  let playPercent = 0
+  let lyricVisible = false
+  let star = false
+
   const backgroundAudioManager = Taro.getBackgroundAudioManager()
 
   let currentSongInfo = get(song.currentSongInfo)
@@ -47,18 +59,6 @@
   const unsubscribeCanPlayList = song.canPlayList.subscribe(value => {
     canPlayList = value
   })
-
-  let isPlaying = false
-  let lrc: LrcType = {
-    scroll: false,
-    nolyric: false,
-    uncollected: false,
-    lrclist: []
-  }
-  let lrcIndex = 0
-  let playPercent = 0
-  let lyricVisible = false
-  let star = false
 
   let playModeImg = require("../../../../assets/images/song/icn_loop_mode.png");
   if (playMode === "one") {

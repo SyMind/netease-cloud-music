@@ -1,1 +1,1 @@
-<t-view>my</t-view>
+<t-view></t-view>

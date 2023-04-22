@@ -247,6 +247,7 @@
     &__item {
       display: flex;
       align-items: center;
+      overflow: hidden;
       &--disabled {
         color: #ccc;
       }
