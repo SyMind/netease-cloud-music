@@ -52,8 +52,8 @@
     <t-view class='layout-body'>
       <t-scroll-view
         class='layout-body__content'
-        scrollY={scrollY}
-        scrollX={scrollX}
+        scroll-y={scrollY}
+        scroll-x={scrollX}
       >
         <slot></slot>
       </t-scroll-view>
@@ -204,7 +204,6 @@
 
     &-body {
       font-size: $font-size-base;
-      padding: $spacing-v-md;
       max-height: 828px;
       min-height: 514px;
 

@@ -1,5 +1,5 @@
 const config = {
-  projectName: 'myApp',
+  projectName: '网易云小程序',
   date: '2023-4-20',
   designWidth: 750,
   deviceRatio: {

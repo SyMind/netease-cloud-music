@@ -92,9 +92,8 @@ export function changePlayMode(value: PlayModeType) {
   playMode.set(value)
 }
 
-export const canPlayList = derived<typeof playListDetailInfo, MusicItemType[]>(playListDetailInfo, ($playListDetailInfo, set) => {
+export const canPlayList = derived<[typeof playListDetailInfo, typeof playListDetailPrivileges], MusicItemType[]>([playListDetailInfo, playListDetailPrivileges], ([$playListDetailInfo, $playListDetailPrivileges], set) => {
   const value: MusicItemType[] = $playListDetailInfo.tracks.filter((_, index) => {
-    const $playListDetailPrivileges = get(playListDetailPrivileges)
     const privilege = $playListDetailPrivileges[index]
     if (!privilege) {
       return false

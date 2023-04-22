@@ -1,6 +1,6 @@
 {
   "miniprogramRoot": "./dist",
-  "projectname": "myApp",
+  "projectname": "网易云小程序",
   "description": "",
   "appid": "touristappid",
   "setting": {

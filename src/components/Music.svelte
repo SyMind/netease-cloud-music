@@ -66,14 +66,12 @@
         {currentSongInfo.al.name}
       </t-view>
     </t-view>
-    <t-view class="music__icon--play">
-      <t-text
-        class="icon music__icon"
-        class:icon-play={!isPlaying}
-        class:icon-pause={isPlaying}
-        on:tap={switchPlayStatus}
-      />
-    </t-view>
+    <t-text
+      class="icon music__icon"
+      class:icon-play={!isPlaying}
+      class:icon-pause={isPlaying}
+      on:tap={switchPlayStatus}
+    />
     <t-text
       class="icon icon-playlist music__icon"
       size="30"
@@ -153,13 +151,12 @@
     }
   }
   &__icon {
+    padding: 0 10px;
     font-size: 30px;
     color: #fff;
-    &--play {
-      padding: 0 10px;
-    }
   }
   &__playlist {
+    padding: 18px;
     color: #323232;
     &__item {
       display: flex;
