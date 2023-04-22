@@ -15,8 +15,8 @@
     value={percent}
     block-size={15}
     active-color="#d43c33"
-    on:change={e => dispatch('change', e)}
-    on:changing={e => dispatch('changing', e)}
+    on:change={e => dispatch('change', e.detail)}
+    on:changing={e => dispatch('changing', e.detail)}
   />
 </t-view>
 

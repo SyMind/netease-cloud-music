@@ -48,7 +48,7 @@
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "svelte": "^3.58.0",
-    "tarojs-plugin-svelte": "^1.0.5"
+    "tarojs-plugin-svelte": "^1.0.6"
   },
   "devDependencies": {
     "@babel/core": "^7.8.0",
