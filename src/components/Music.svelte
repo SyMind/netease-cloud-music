@@ -62,8 +62,8 @@
     <t-view class="music__icon--play">
       <t-text
         class="icon music__icon"
-        class:icon-play={isPlaying}
-        class:icon-pause={!isPlaying}
+        class:icon-play={!isPlaying}
+        class:icon-pause={isPlaying}
         on:tap={switchPlayStatus}
       />
     </t-view>
