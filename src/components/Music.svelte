@@ -3,6 +3,7 @@
   import { get } from 'svelte/store'
   import Taro from '@tarojs/taro'
   import * as song from '../stores/song'
+  import FloatLayout from './FloatLayout.svelte';
 
   const backgroundAudioManager = Taro.getBackgroundAudioManager()
 
@@ -16,15 +17,17 @@
     isPlaying = value
   })
 
-  // let canPlayList = get(song.canPlayList)
-  // const unsubscribeCanPlayList = song.canPlayList.subscribe(value => {
-  //   canPlayList = value
-  // })
+  let isOpened = false;
+
+  let canPlayList = get(song.canPlayList)
+  const unsubscribeCanPlayList = song.canPlayList.subscribe(value => {
+    canPlayList = value
+  })
 
   onDestroy(() => {
     unsubscribeCurrentSongInfo()
     unsubscribeIsPlaying()
-    // unsubscribeCanPlayList()
+    unsubscribeCanPlayList()
   })
 
   function goDetail() {
@@ -42,6 +45,10 @@
       backgroundAudioManager.play();
       song.updatePlayStatus(true)
     }
+  }
+
+  function playSong(id: number) {
+
   }
 </script>
 
@@ -67,41 +74,38 @@
         on:tap={switchPlayStatus}
       />
     </t-view>
-    <!-- <AtIcon
-      value="playlist"
+    <t-text
+      class="icon icon-playlist music__icon"
       size="30"
       color="#FFF"
-      className="icon_playlist"
-      onClick={() => setIsOpened(true)}
-    ></AtIcon> -->
-    <!-- <AtFloatLayout
+      on:tap={() => isOpened = true}
+    />
+    <FloatLayout
       isOpened={isOpened}
       title="播放列表"
       scrollY
-      onClose={() => setIsOpened(false)}
+      on:close={() => isOpened = false}
     >
-      <t-view className="music__playlist">
-        {canPlayList.map(item => (
+      <t-view class="music__playlist">
+        {#each canPlayList as item}
           <t-view
             key={item.id}
-            className={classnames({
-              music__playlist__item: true,
-              current: item.current
-            })}
+            class="music__playlist__item"
+            class:current={item.current}
           >
             <t-view
-              className="music__playlist__item__info"
-              onClick={() => playSong(item.id)}
+              class="music__playlist__item__info"
+              on:tap={() => playSong(item.id)}
             >
               {`${item.name} - ${item.ar[0] ? item.ar[0].name : ""}`}
             </t-view>
-            <t-view className="music__playlist__item__close">
-              <AtIcon value="chevron-right" size="16" color="#ccc" />
+            <t-view class="music__playlist__item__close">
+              <t-text class="icon icon-chevron-right" size="16" color="#ccc" />
             </t-view>
           </t-view>
-        ))}
+        {/each}
       </t-view>
-    </AtFloatLayout> -->
+    </FloatLayout>
   </t-view>
 {/if}
 
