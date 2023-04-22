@@ -1,6 +1,7 @@
 export default defineAppConfig({
   pages: [
-    'pages/index/index'
+    'pages/index/index',
+    'pages/my/index'
   ],
   window: {
     backgroundTextStyle: 'light',
@@ -17,5 +18,22 @@ export default defineAppConfig({
         'pages/songDetail/index',
       ]
     }
-  ]
+  ],
+  tabBar: {
+    selectedColor: '#d43c33',
+    list: [
+      {
+        pagePath: 'pages/index/index',
+        text: '发现',
+        iconPath: 'assets/images/discovery.png',
+        selectedIconPath: 'assets/images/selected_discovery.png'
+      },
+      {
+        pagePath: 'pages/my/index',
+        text: '我的',
+        iconPath: 'assets/images/account.png',
+        selectedIconPath: 'assets/images/selected_account.png'
+      }
+    ]
+  }
 })

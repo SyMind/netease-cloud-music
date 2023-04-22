@@ -57,7 +57,7 @@
   }
 </script>
 
-<t-view class="container">
+<t-view>
   <Loading fullPage={true} hide={!showLoading} />
 
   <SearchBar />
@@ -128,9 +128,6 @@
 <style lang="scss">
 @import "../../base.scss";
 
-.container {
-  padding-bottom: 120px;
-}
 // .has_music_box {
 //   padding-bottom: 220px;
 // }
