@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { get } from 'svelte/store'
   import { onMount, onDestroy } from 'svelte'
+  import { get } from 'svelte/store'
   import Taro from '@tarojs/taro'
   import * as song from '../../../../stores/song'
   import Slider from '../../../../components/Slider.svelte'
@@ -253,6 +253,9 @@
     unsubscribePlayMode()
     unsubscribeCurrentSongIndex()
     unsubscribeCanPlayList()
+
+    // 更新播放状态
+    song.updatePlayStatus(isPlaying)
   })
 </script>
 

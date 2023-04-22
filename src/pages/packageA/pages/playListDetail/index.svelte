@@ -5,6 +5,7 @@
   import { formatCount } from '../../../../utils/common'
   import * as song from '../../../../stores/song'
   import Loading from '../../../../components/Loading.svelte'
+  import Music from '../../../../components/Music.svelte'
 
   let playListDetailInfo = get(song.playListDetailInfo)
   const unsubscribePlayListDetailInfo = song.playListDetailInfo.subscribe(value => {
@@ -14,6 +15,11 @@
   let playListDetailPrivileges = get(song.playListDetailPrivileges)
   const unsubscribePlayListDetailPrivileges = song.playListDetailPrivileges.subscribe(value => {
     playListDetailPrivileges = value
+  })
+
+  let currentSongInfo = get(song.currentSongInfo)
+  const unsubscribeCurrentSongInfo = song.currentSongInfo.subscribe(value => {
+    currentSongInfo = value
   })
 
   onMount(() => {
@@ -27,6 +33,7 @@
   onDestroy(() => {
     unsubscribePlayListDetailInfo()
     unsubscribePlayListDetailPrivileges()
+    unsubscribeCurrentSongInfo()
   })
 
   function playSong(songId, playStatus) {
@@ -43,7 +50,9 @@
   }
 </script>
 
-<t-view>
+<t-view class:has-music-box={currentSongInfo.name}>
+  <Music />
+
   <t-view class="playList__header">
     <t-image
       class="playList__header__bg"
@@ -125,9 +134,9 @@
 </t-view>
 
 <style lang="scss">
-// .has-music-box {
-//   padding-bottom: 120px;
-// }
+.has-music-box {
+  padding-bottom: 120px;
+}
 
 .playList__header {
   position: relative;

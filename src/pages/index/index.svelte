@@ -1,9 +1,12 @@
 <script lang="ts">
-  import { onMount } from 'svelte'
+  import { onMount, onDestroy } from 'svelte'
+  import { get } from 'svelte/store'
   import Taro from '@tarojs/taro'
   import Loading from '../../components/Loading.svelte'
+  import Music from '../../components/Music.svelte'
   import SearchBar from '../../components/SearchBar.svelte'
   import api from '../../services/api'
+  import * as song from '../../stores/song'
 
   interface RecommendPlay {
     id: number;
@@ -20,6 +23,11 @@
   let bannerList = []
   let recommendPlayList: RecommendPlay[] = []
   let recommendDj: RecommendDj[] = []
+
+  let currentSongInfo = get(song.currentSongInfo)
+  const unsubscribeCurrentSongInfo = song.currentSongInfo.subscribe(value => {
+    currentSongInfo = value
+  })
 
   onMount(() => {
     api.get("/banner", { type: 1 }).then(({ data }) => {
@@ -41,6 +49,10 @@
     })
   })
 
+  onDestroy(() => {
+    unsubscribeCurrentSongInfo()
+  })
+
   $: showLoading = !recommendPlayList.length && !recommendDj.length
 
   function workInProgress() {
@@ -57,8 +69,10 @@
   }
 </script>
 
-<t-view>
+<t-view class:has_music_box={currentSongInfo.name}>
   <Loading fullPage={true} hide={!showLoading} />
+
+  <Music />
 
   <SearchBar />
 
@@ -128,9 +142,9 @@
 <style lang="scss">
 @import "../../base.scss";
 
-// .has_music_box {
-//   padding-bottom: 220px;
-// }
+.has_music_box {
+  padding-bottom: 120px;
+}
 .banner_list {
   height: 268px;
   margin-top: 20px;

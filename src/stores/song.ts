@@ -95,7 +95,17 @@ export function changePlayMode(value: PlayModeType) {
 export const canPlayList = derived<typeof playListDetailInfo, MusicItemType[]>(playListDetailInfo, ($playListDetailInfo, set) => {
   const value: MusicItemType[] = $playListDetailInfo.tracks.filter((_, index) => {
     const $playListDetailPrivileges = get(playListDetailPrivileges)
-    return $playListDetailPrivileges[index].st !== -200
+    const privilege = $playListDetailPrivileges[index]
+    if (!privilege) {
+      return false
+    }
+    return privilege.st !== -200
   })
 	set(value)
 });
+
+export const isPlaying = writable<boolean>(false)
+
+export function updatePlayStatus(value: boolean) {
+  isPlaying.set(value)
+}
