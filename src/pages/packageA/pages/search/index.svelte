@@ -1,22 +1,39 @@
-<script>
-  import SearchBar from '../../../../components/SearchBar'
+<script lang="ts">
+  import Taro from '@tarojs/taro'
+  import api from '../../../../services/api'
+  import Loading from '../../../../components/Loading.svelte'
 
   let searchValue = ''
+  let historyList: any[] = []
+  let hotList: any[] = []
+
+  api.get('/search/hot/detail', {}).then((res) => {
+    if (res.data && res.data.data) {
+      hotList = res.data.data
+    }
+  })
+
+  function goResult(keyword: string) {
+    // setKeywordInHistory(keyword)
+    Taro.navigateTo({
+      url: `/pages/packageA/pages/searchResult/index?keywords=${keyword}`
+    })
+  }
 </script>
 
 <t-view class='search'>
   <!-- <SearchBar
+    class='search__input'
     actionName='搜一下'
     value={searchValue}
+    focus={true}
+    fixed={true}
     onChange={this.searchTextChange.bind(this)}
     onActionClick={this.searchResult.bind(this)}
     onConfirm={this.searchResult.bind(this)}
-    focus={true}
-    class='search__input'
-    fixed={true}
   /> -->
-  <!-- <t-scroll-view class='search_content' scroll-y={true}>
-    {#if historyList.length}
+  <t-scroll-view class='search_content' scroll-y={true}>
+    <!-- {#if historyList.length}
       <t-view class='search__history'>
         <t-view class='search__history__title'>
           <t-text class='search__history__title__label'>
@@ -30,7 +47,7 @@
           {/each}
         </t-scroll-view>
       </t-view>
-    {/if}
+    {/if} -->
 
     <t-view class='search__hot'>
       <t-view class='search__history__title'>
@@ -44,28 +61,23 @@
       {/if}
 
       <t-view class='search__hot__list'>
-        {#each hotList as item, index}
+        {#each hotList as item, index (item.searchWord)}
           <t-view
             class='search__hot__list__item flex flex-align-center'
-            key={item.searchWord}
-            onClick={this.goResult.bind(this, item.searchWord)}
+            on:tap={() => goResult(item.searchWord)}
           >
-            <t-view class={
-              classnames({
-                search__hot__list__item__index: true,
-                spec: index <= 2
-              })
-            }>
+            <t-view
+              class="search__hot__list__item__index"
+              class:spec={index <= 2}
+            >
               {index + 1}
             </t-view>
             <t-view class='search__hot__list__item__info'>
               <t-view class="flex flex-align-center">
-                <t-text class={
-                  classnames({
-                    search__hot__list__item__info__title: true,
-                    spec: index <= 2
-                  })
-                }>
+                <t-text
+                  class="search__hot__list__item__info__title"
+                  class:spec={index <= 2}
+                >
                   {item.searchWord}
                 </t-text>
                 <t-text class='search__hot__list__item__info__score'>
@@ -75,12 +87,8 @@
                   <t-image
                     src={item.iconUrl}
                     mode="widthFix"
-                    class={
-                      classnames({
-                        search__hot__list__item__info__icon: true,
-                        spec: item.iconType === 5
-                      })
-                    }
+                    class="search__hot__list__item__info__icon"
+                    class:spec={item.iconType === 5}
                   />
                 {/if}
               </t-view>
@@ -92,5 +100,91 @@
         {/each}
       </t-view>
     </t-view>
-  </t-scroll-view> -->
+  </t-scroll-view>
 </t-view>
+
+<style lang="scss">
+.search {
+  color: #232323;
+  position: relative;
+  height: 100%;
+  // .search__input {
+  //   position: absolute;
+  //   width: 100%;
+  // }
+  &_content {
+    padding: 108px 36px 24px 36px;
+    height: 100%;
+    box-sizing: border-box;
+  }
+  &__history__list {
+    width: 100%;
+    height: 60px;
+    white-space: nowrap;
+    margin: 30px 0;
+    &__item {
+      padding: 10px 30px;
+      font-size: 24px;
+      background-color: #f8f8f8;
+      color: #616161;
+      border-radius: 30px;
+      margin-right: 20px;
+      display: inline-block;
+    }
+  }
+  &__history__title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    &__label {
+      font-size: 32px;
+    }
+    &__icon {
+      padding: 15px;
+    }
+  }
+  &__hot {
+    margin-top: 10px;
+    &__list__item {
+      margin: 30px 0;
+    }
+    &__list__item__index {
+      font-size: 36px;
+      font-weight: 700;
+      margin-right: 40px;
+      color: #9e9e9e;
+      &.spec {
+        color: #f13745;
+      }
+    }
+    &__list__item__info {
+      flex: 1;
+      &__title {
+        font-size: 36px;
+        color: #4a4a4c;
+        &.spec {
+          font-weight: 700;
+          color: #333237;
+        }
+      }
+      &__score {
+        font-size: 28px;
+        color: #bbbbbb;
+        margin-left: 20px;
+      }
+      &__icon {
+        max-width: 60px;
+        margin-left: 40px;
+        &.spec {
+          max-width: 30px;
+        }
+      }
+      &__desc {
+        font-size: 26px;
+        color: #cccccc;
+        margin-top: 10px;
+      }
+    }
+  }
+}
+</style>

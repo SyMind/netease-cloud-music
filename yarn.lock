@@ -9668,10 +9668,10 @@ taro-css-to-react-native@3.6.5:
     css-mediaquery "^0.1.2"
     postcss-value-parser "^3.3.0"
 
-tarojs-plugin-svelte@^1.0.6:
-  version "1.0.6"
-  resolved "https://registry.npmjs.org/tarojs-plugin-svelte/-/tarojs-plugin-svelte-1.0.6.tgz#bc43592825f36e05dae62ca1957fa2cddf9bc1bc"
-  integrity sha512-NjI8++HaWEDRoKyjGocf2u85fRxCM6yPuPLhVRuABWK/5aP80W5qY28EidmMkOZQBq565onOT9sV5kg9DNKXMQ==
+tarojs-plugin-svelte@^1.0.7:
+  version "1.0.8"
+  resolved "https://registry.npmjs.org/tarojs-plugin-svelte/-/tarojs-plugin-svelte-1.0.8.tgz#96e1c00e9684216a8b176701b5c6b9397f8b3b2e"
+  integrity sha512-6+whgaxTsskei9AqIwKUloFHPJ7TOBthL5jtqMhbIM2rZnw05/XgTc3sq0h8bkiLBDquDGNgdqsYfv6bWsf89Q==
   dependencies:
     code-red "^0.2.5"
     estree-walker "^3.0.2"
