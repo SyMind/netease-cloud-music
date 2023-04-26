@@ -3,6 +3,7 @@
   import type { InputProps } from '@tarojs/components'
 
   type $$Props = {
+    class?: string;
     /**
      * 输入框当前值
      * @type {string}
@@ -59,6 +60,8 @@
     inputType?: InputProps['type']
   }
 
+  let className: string = ''
+  export { className as class }
   export let value = ''
   export let placeholder: string = ''
   export let maxLength = 140
@@ -79,7 +82,8 @@
 </script>
 
 <t-view
-  class="search-bar"
+  class={className}
+  class:search-bar={true}
   class:search-bar--fixed={fixed}
 >
   <t-view class='search-bar__input-cnt'>
@@ -235,7 +239,7 @@
       font-size: $search-bar-font-size;
       line-height: $search-bar-input-height;
       border-radius: 4PX;
-      background-color: $search-bar-btn-bg-color;
+      background-color: #d43c33;
       transition: margin-right 0.3s, opacity 0.3s;
       opacity: 0;
     }

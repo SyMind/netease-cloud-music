@@ -2,6 +2,7 @@
   import Taro from '@tarojs/taro'
   import api from '../../../../services/api'
   import Loading from '../../../../components/Loading.svelte'
+  import SearchBar from '../../../../components/SearchBar.svelte'
 
   let searchValue = ''
   let historyList: any[] = []
@@ -22,16 +23,16 @@
 </script>
 
 <t-view class='search'>
-  <!-- <SearchBar
-    class='search__input'
-    actionName='搜一下'
+  <SearchBar
+    placeholder='搜一下'
     value={searchValue}
     focus={true}
     fixed={true}
-    onChange={this.searchTextChange.bind(this)}
-    onActionClick={this.searchResult.bind(this)}
-    onConfirm={this.searchResult.bind(this)}
-  /> -->
+    on:change={() => {}}
+    on:tap={() => {}}
+    on:confirm={() => {}}
+  />
+
   <t-scroll-view class='search_content' scroll-y={true}>
     <!-- {#if historyList.length}
       <t-view class='search__history'>
@@ -104,87 +105,84 @@
 </t-view>
 
 <style lang="scss">
-.search {
-  color: #232323;
-  position: relative;
-  height: 100%;
-  // .search__input {
-  //   position: absolute;
-  //   width: 100%;
-  // }
-  &_content {
-    padding: 108px 36px 24px 36px;
+  .search {
+    color: #232323;
+    position: relative;
     height: 100%;
-    box-sizing: border-box;
-  }
-  &__history__list {
-    width: 100%;
-    height: 60px;
-    white-space: nowrap;
-    margin: 30px 0;
-    &__item {
-      padding: 10px 30px;
-      font-size: 24px;
-      background-color: #f8f8f8;
-      color: #616161;
-      border-radius: 30px;
-      margin-right: 20px;
-      display: inline-block;
+
+    &_content {
+      padding: 108px 36px 24px 36px;
+      height: 100%;
+      box-sizing: border-box;
     }
-  }
-  &__history__title {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    &__label {
-      font-size: 32px;
-    }
-    &__icon {
-      padding: 15px;
-    }
-  }
-  &__hot {
-    margin-top: 10px;
-    &__list__item {
+    &__history__list {
+      width: 100%;
+      height: 60px;
+      white-space: nowrap;
       margin: 30px 0;
-    }
-    &__list__item__index {
-      font-size: 36px;
-      font-weight: 700;
-      margin-right: 40px;
-      color: #9e9e9e;
-      &.spec {
-        color: #f13745;
+      &__item {
+        padding: 10px 30px;
+        font-size: 24px;
+        background-color: #f8f8f8;
+        color: #616161;
+        border-radius: 30px;
+        margin-right: 20px;
+        display: inline-block;
       }
     }
-    &__list__item__info {
-      flex: 1;
-      &__title {
-        font-size: 36px;
-        color: #4a4a4c;
-        &.spec {
-          font-weight: 700;
-          color: #333237;
-        }
-      }
-      &__score {
-        font-size: 28px;
-        color: #bbbbbb;
-        margin-left: 20px;
+    &__history__title {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      &__label {
+        font-size: 32px;
       }
       &__icon {
-        max-width: 60px;
-        margin-left: 40px;
+        padding: 15px;
+      }
+    }
+    &__hot {
+      margin-top: 10px;
+      &__list__item {
+        margin: 30px 0;
+      }
+      &__list__item__index {
+        font-size: 36px;
+        font-weight: 700;
+        margin-right: 40px;
+        color: #9e9e9e;
         &.spec {
-          max-width: 30px;
+          color: #f13745;
         }
       }
-      &__desc {
-        font-size: 26px;
-        color: #cccccc;
-        margin-top: 10px;
+      &__list__item__info {
+        flex: 1;
+        &__title {
+          font-size: 36px;
+          color: #4a4a4c;
+          &.spec {
+            font-weight: 700;
+            color: #333237;
+          }
+        }
+        &__score {
+          font-size: 28px;
+          color: #bbbbbb;
+          margin-left: 20px;
+        }
+        &__icon {
+          max-width: 60px;
+          margin-left: 40px;
+          &.spec {
+            max-width: 30px;
+          }
+        }
+        &__desc {
+          font-size: 26px;
+          color: #cccccc;
+          margin-top: 10px;
+        }
       }
     }
   }
-}
 </style>
