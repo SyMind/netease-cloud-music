@@ -68,13 +68,18 @@
 
   <Music />
 
-  <SearchBar
+  <t-view
     on:tap={() => {
       Taro.navigateTo({
         url: `/pages/packageA/pages/search/index`
       });
     }}
-  />
+  >
+    <SearchBar
+      placeholder="搜一下"
+      disabled={true}
+    />
+  </t-view>
 
   <t-swiper
     circular={true}
